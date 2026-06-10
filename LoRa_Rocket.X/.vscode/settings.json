@@ -1,0 +1,9 @@
+{
+    "mplab.clangd.compileCommandsDir": "${workspaceFolder}/_build/LoRa_Rocket/default",
+    "memory-inspector.debugTypes": [
+        "arm-debugger",
+        "embedded-debug",
+        "gdb",
+        "mplab-core-da"
+    ]
+}

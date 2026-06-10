@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default",
+  "command": "/opt/microchip/xc16/v2.10/bin/xc16-gcc -DXPRJ_default=default -D__DEBUG -I\"/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/cmake/LoRa_Rocket/default/../../..\" -x c -g -mcpu=33FJ128GP802 -O0 -msmart-io=1 -Wall -msfr-warn=off -mdfp=/home/mizkyosia/.mchp_packs/Microchip/dsPIC33F-GP-MC_DFP/1.4.235/xc16 -o CMakeFiles/LoRa_Rocket_default_default_XC16_compile.dir/home/mizkyosia/CIR3/Electronique_numérique/Projet/LoRa_Rocket.X/lora.c.o -c \"/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/lora.c\"",
+  "file": "/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/lora.c",
+  "output": "/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default/CMakeFiles/LoRa_Rocket_default_default_XC16_compile.dir/home/mizkyosia/CIR3/Electronique_numérique/Projet/LoRa_Rocket.X/lora.c.o"
+},
+{
+  "directory": "/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default",
+  "command": "/opt/microchip/xc16/v2.10/bin/xc16-gcc -DXPRJ_default=default -D__DEBUG -I\"/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/cmake/LoRa_Rocket/default/../../..\" -x c -g -mcpu=33FJ128GP802 -O0 -msmart-io=1 -Wall -msfr-warn=off -mdfp=/home/mizkyosia/.mchp_packs/Microchip/dsPIC33F-GP-MC_DFP/1.4.235/xc16 -o CMakeFiles/LoRa_Rocket_default_default_XC16_compile.dir/home/mizkyosia/CIR3/Electronique_numérique/Projet/LoRa_Rocket.X/spi.c.o -c \"/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/spi.c\"",
+  "file": "/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/spi.c",
+  "output": "/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default/CMakeFiles/LoRa_Rocket_default_default_XC16_compile.dir/home/mizkyosia/CIR3/Electronique_numérique/Projet/LoRa_Rocket.X/spi.c.o"
+},
+{
+  "directory": "/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default",
+  "command": "/opt/microchip/xc16/v2.10/bin/xc16-gcc -DXPRJ_default=default -D__DEBUG -I\"/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/cmake/LoRa_Rocket/default/../../..\" -x c -g -mcpu=33FJ128GP802 -O0 -msmart-io=1 -Wall -msfr-warn=off -mdfp=/home/mizkyosia/.mchp_packs/Microchip/dsPIC33F-GP-MC_DFP/1.4.235/xc16 -o CMakeFiles/LoRa_Rocket_default_default_XC16_compile.dir/home/mizkyosia/CIR3/Electronique_numérique/Projet/LoRa_Rocket.X/uart.c.o -c \"/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/uart.c\"",
+  "file": "/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/uart.c",
+  "output": "/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default/CMakeFiles/LoRa_Rocket_default_default_XC16_compile.dir/home/mizkyosia/CIR3/Electronique_numérique/Projet/LoRa_Rocket.X/uart.c.o"
+}
+]

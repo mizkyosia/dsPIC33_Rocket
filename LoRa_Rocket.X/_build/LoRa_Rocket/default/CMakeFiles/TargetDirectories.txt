@@ -1,0 +1,5 @@
+/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default/CMakeFiles/LoRa_Rocket_default_default_XC16_compile.dir
+/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default/CMakeFiles/LoRa_Rocket_default_image_7dTD83jU.dir
+/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default/CMakeFiles/LoRa_Rocket_default_Bin2Hex.dir
+/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default/CMakeFiles/edit_cache.dir
+/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Rocket.X/_build/LoRa_Rocket/default/CMakeFiles/rebuild_cache.dir
