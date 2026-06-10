@@ -62,98 +62,67 @@
 #pragma config JTAGEN = OFF             // JTAG Port Enable (JTAG is Disabled)
 
 
-
-
 uint8_t reg_val, pout;
 int16_t i, rssi;
-uint8_t txBuffer[256];
+uint8_t rxBuffer[256];
 
 uint8_t version;
 uint8_t test;
 
 int main(int argc, char** argv) {
 
-    const uint8_t txMsg[] = "Poisson_Steve";
+    const uint8_t txMsg[] = "LoRa_TX";
 
-    CLKDIVbits.DOZEN = 0;
-    
     System_Init();
 
-    LoRa_AntennaTX(); // connect antenna to module output
+    LoRa_AntennaRX(); // connect antenna to module output
 
     // put module in LoRa mode (see SX1272 datasheet page 107)
     UARTWriteStrLn("set mode to LoRa standby");    
-    
+
     LoRa_WriteRegister(REG_OP_MODE, FSK_SLEEP_MODE); // SLEEP mode required first to change bit n�7
     LoRa_WriteRegister(REG_OP_MODE, LORA_SLEEP_MODE); // switch from FSK mode to LoRa mode
     LoRa_WriteRegister(REG_OP_MODE, LORA_STANDBY_MODE); // STANDBY mode required fot FIFO loading
+
+    LoRa_WriteRegister(REG_OP_MODE, LORA_RX_CONTINUOUS_MODE); // Continuous listening
+
     __delay_ms(100);
     GetMode();
-
-    UARTWriteStrLn("initialized module ");
-    
-    LoRa_Init();
     
     version = LoRa_ReadRegister(REG_VERSION);
 
+    UARTWriteStrLn("initialized module ");
 
-    strcpy((char*) txBuffer, (char*) txMsg); // load txBuffer with content of txMsg
-    // txMsg is a table of constant values, so it is stored in Flash Memory
-    // txBuffer is a table of variables, so it is stored in RAM
+    LoRa_Init();
 
-    // load FIFO with data to transmit
-    UARTWriteStrLn(" ");
-    UARTWriteStrLn("step 1: load FIFO");
-    LoRa_WriteRegister(REG_FIFO_ADDR_PTR, LoRa_ReadRegister(REG_FIFO_TX_BASE_ADDR)); // FifoAddrPtr takes value of FifoTxBaseAddr
-    LoRa_WriteRegister(REG_PAYLOAD_LENGTH_LORA, PAYLOAD_LENGTH); // set the number of bytes to transmit (PAYLOAD_LENGTH is defined in RF_LoRa868_SO.h)
+    uint8_t irqFlags;
+    uint8_t len;
 
-    for (i = 0; i < PAYLOAD_LENGTH; i++) {
-        LoRa_WriteRegister(REG_FIFO, txBuffer[i]); // load FIFO with data to transmit  
-        __delay_ms(100);
-    }
-
+    // RxDone flag = bit 6 (0x40)r
     forever{
+        irqFlags = LoRa_ReadRegister(REG_IRQ_FLAGS);
+        UARTWriteStr("Polling...");
+        if (irqFlags & 0x40) {
+            uint8_t currentAddr = LoRa_ReadRegister(REG_FIFO_RX_CURRENT_ADDR);
 
-        test++;
-        // set mode to LoRa TX
-        UARTWriteStrLn(" ");
-        UARTWriteStrLn("step 2: set mode to LoRa TX");
-        LoRa_WriteRegister(REG_OP_MODE, LORA_TX_MODE);
-        __delay_ms(100); // delay required to start oscillator and PLL
-        // GetMode();
+            LoRa_WriteRegister(REG_FIFO_ADDR_PTR, currentAddr);
 
-        // wait end of transmission
-        reg_val = LoRa_ReadRegister(REG_IRQ_FLAGS);
-        while ((reg_val & 0x08) == 0x00) { // wait for end of transmission (wait until TxDone is set)
-            reg_val = LoRa_ReadRegister(REG_IRQ_FLAGS);
+            len = LoRa_ReadRegister(REG_RX_NB_BYTES);
+
+            for (uint8_t i = 0; i < len; i++) {
+                rxBuffer[i] = LoRa_ReadRegister(REG_FIFO);
+            }
+
+            // Clear IRQ flags
+            LoRa_WriteRegister(REG_IRQ_FLAGS, 0xFF);
+
+            // process packet
+            UARTWriteStr("Received signal :");
+
+            for(uint8_t i = 0; i < len; i++)
+                UARTWriteByteHex(rxBuffer[i]);
+
+            UARTWriteStrLn("Idle mode ----------------------------");
         }
-        UARTWriteStrLn(" ");
-        UARTWriteStrLn("step 3: TxDone flag set");
-
-        __delay_ms(200); // delay is required before checking mode: it takes some time to go from TX mode to STDBY mode
-        GetMode(); // check that mode is back to STDBY
-
-        // reset all IRQs
-        UARTWriteStrLn(" ");
-        UARTWriteStrLn("step 4: clear flags");
-        reg_val = LoRa_ReadRegister(REG_IRQ_FLAGS);
-        UARTWriteStr("before clear: REG_IRQ_FLAGS = 0x");
-        UARTWriteByteHex(reg_val);
-
-        LoRa_WriteRegister(REG_IRQ_FLAGS, 0xFF); // clear flags: writing 1 clears flag
-
-        // check that flags are actually cleared (useless if not debugging)
-        reg_val = LoRa_ReadRegister(REG_IRQ_FLAGS);
-        UARTWriteStr("after clear: REG_IRQ_FLAGS = 0x");
-        UARTWriteByteHex(reg_val);
-        
-        UARTWriteStr("step 5: wait until next transmission");
-
-        // wait before next transmission
-        for (i = 0; i < 4; i++) {
-            // __delay_ms(500);
-        }
-
     }
-
 }
