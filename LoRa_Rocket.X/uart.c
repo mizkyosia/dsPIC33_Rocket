@@ -96,7 +96,19 @@ void UARTWriteU8(uint8_t data)
 
 void UARTWriteU16(uint16_t data)
 {
+    UARTWriteByte((data / 10000) + '0');            
+    UARTWriteByte(((data % 10000) / 1000) + '0');   
+    UARTWriteByte(((data % 1000) / 100) + '0');     
+    UARTWriteByte(((data % 100) / 10) + '0');       
+    UARTWriteByte((data % 10) + '0');       
+}
 
+void UARTWriteI16(int16_t data)
+{
+    if(data < 0) {
+        UARTWriteByte('-');
+        data = -data;
+    }
     UARTWriteByte((data / 10000) + '0');            
     UARTWriteByte(((data % 10000) / 1000) + '0');   
     UARTWriteByte(((data % 1000) / 100) + '0');     
@@ -124,4 +136,49 @@ void UARTWriteFloat(float value)
     sprintf(buffer, "%d.%03d", integerPart, fractionalPart);
 
     UARTWriteStr(buffer);
+}
+
+void UARTWritePayloadDebug(const Payload *p)
+{
+    UARTWriteStrLn("Payload:");
+
+    UARTWriteStr("  ACC = {");
+    UARTWriteI16(p->acc.x);
+    UARTWriteStr(", ");
+    UARTWriteI16(p->acc.y);
+    UARTWriteStr(", ");
+    UARTWriteI16(p->acc.z);
+    UARTWriteStrLn("}");
+
+    UARTWriteStr("  GYR = {");
+    UARTWriteI16(p->gyr.x);
+    UARTWriteStr(", ");
+    UARTWriteI16(p->gyr.y);
+    UARTWriteStr(", ");
+    UARTWriteI16(p->gyr.z);
+    UARTWriteStrLn("}");
+
+    UARTWriteStr("  POS = {");
+    UARTWriteFloat(p->pos.x);
+    UARTWriteStr(", ");
+    UARTWriteFloat(p->pos.y);
+    UARTWriteStr(", ");
+    UARTWriteFloat(p->pos.z);
+    UARTWriteStrLn("}");
+
+    UARTWriteStr("  Pressure = ");
+    UARTWriteFloat(p->pressure);
+    UARTWriteStr(" Pa\r\n");
+
+    UARTWriteStr("  DeltaTime = ");
+    UARTWriteU16(p->deltaTime);
+    UARTWriteStrLn(" ms");
+
+    UARTWriteStr("  Battery = ");
+    UARTWriteU8((int)p->battery);
+    UARTWriteStrLn(" %");
+
+    UARTWriteStr("  Stage = ");
+    UARTWriteU8((int)p->stage);
+    UARTWriteStrLn(" ");
 }

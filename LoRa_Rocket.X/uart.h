@@ -19,8 +19,11 @@ void UARTWriteStr(char *string);               // output strings to UART
 void UARTWriteStrLn(char *string);             // output strings to UART
 void UARTWriteByteHex(uint8_t data);        // send the hexadecimal value of a byte so that it is readable in a terminal window
 void UARTWriteU8(uint8_t data);        // send the decimal value of a byte so that it is readable in a terminal window
+void UARTWriteI16(int16_t data);
 void UARTWriteU16(uint16_t data);
 void UARTWriteFloat(float value);
+
+void UARTWritePayloadDebug(const Payload *p);
 
 #endif	/* _UART_H */
 

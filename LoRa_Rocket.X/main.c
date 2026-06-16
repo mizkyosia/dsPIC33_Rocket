@@ -20,6 +20,7 @@
 #include "gpio.h"
 #include "payload.h"
 #include "BMP280.h"
+#include "LSM6DSL.h"
 
 
 // =============================================================================
@@ -100,6 +101,7 @@ int main(int argc, char** argv) {
     //LoRa_Init();
     
     BMP280_Init();
+    LSM6DSL_Init();
 
     // version = LoRa_ReadRegister(REG_VERSION);
     
@@ -146,19 +148,22 @@ void test_LoRa(){
         UARTWriteStrLn("Payload sent. Waiting for next transmission...");
 }
 
-void testBME(void){
-    UARTWriteStrLn("Fetching pressure data...");
-    
+void testBME(void){    
     //uint8_t temp_lsb = I2C1_Read(BME280_ADDR, 0xFB);
     BMP280_FetchData(&payload);
+}
+
+void testLSM6DSL(void){
+    LSM6DSL_FetchData(&payload);
     
-    UARTWriteStr("Pressure : "); UARTWriteU16(payload.pressure >> 16); UARTWriteU16(payload.pressure); UARTWriteStrLn(" Pa");
-    
-    __delay_ms(500);
+    UARTWriteStr("Acceleration X : "); UARTWriteU16(payload.acc.x); UARTWriteStrLn(" ");
 }
 
 void loop(void) {
     while (1) {
-        testBME();
+        BMP280_FetchData(&payload);
+        LSM6DSL_FetchData(&payload);
+        UARTWritePayloadDebug(&payload);
+        __delay_ms(500);
     }
 }

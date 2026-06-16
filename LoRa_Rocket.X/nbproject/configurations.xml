@@ -14,6 +14,7 @@
       <itemPath>payload.h</itemPath>
       <itemPath>gps.h</itemPath>
       <itemPath>BMP280.h</itemPath>
+      <itemPath>LSM6DSL.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -34,6 +35,7 @@
       <itemPath>gpio.c</itemPath>
       <itemPath>i2c.c</itemPath>
       <itemPath>BMP280.c</itemPath>
+      <itemPath>LSM6DSL.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
