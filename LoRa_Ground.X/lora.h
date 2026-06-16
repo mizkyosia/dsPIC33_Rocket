@@ -6,6 +6,7 @@
  */
 
 #include "general.h"
+#include "payload.h"
 
 #ifndef LORA_H
 #define	LORA_H
@@ -131,16 +132,16 @@
 #define        FSK_RX_MODE                      0x05
 
 // SX1272 RESET pin
-#define RF_RESETpin           LATBbits.LATB4
-#define RF_RESETpin_DIR       TRISBbits.TRISB4
+#define RF_RESETpin           LATBbits.LATB11
+#define RF_RESETpin_DIR       TRISBbits.TRISB11
 
 // Antenna switch TX control
-#define RF_TXpin              LATBbits.LATB2
-#define RF_TXpin_DIR          TRISBbits.TRISB2
+#define RF_TXpin              LATBbits.LATB3
+#define RF_TXpin_DIR          TRISBbits.TRISB3
 
 // Antenna switch RX control
-#define RF_RXpin              LATBbits.LATB3
-#define RF_RXpin_DIR          TRISBbits.TRISB3
+#define RF_RXpin              LATBbits.LATB2
+#define RF_RXpin_DIR          TRISBbits.TRISB2
 
 // Chip select pin
 #define LORA_CS_LAT   LATBbits.LATB12
@@ -160,6 +161,8 @@ void LoRa_AntennaRX();
 void LoRa_WriteRegister(uint8_t addr, uint8_t value);
 uint8_t LoRa_ReadRegister(uint8_t addr);
 void LoRa_SendPacket(uint8_t *data, uint8_t length);
+
+inline void LoRa_SendPayload(Payload payload);
 
 void GetMode(void);
 

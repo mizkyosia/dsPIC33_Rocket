@@ -7,8 +7,10 @@
       <itemPath>general.h</itemPath>
       <itemPath>spi.h</itemPath>
       <itemPath>uart.h</itemPath>
-      <itemPath>lora.h</itemPath>
       <itemPath>gpio.h</itemPath>
+      <itemPath>payload.h</itemPath>
+      <itemPath>lora.h</itemPath>
+      <itemPath>config.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -25,8 +27,8 @@
       <itemPath>main.c</itemPath>
       <itemPath>spi.c</itemPath>
       <itemPath>uart.c</itemPath>
-      <itemPath>lora.c</itemPath>
       <itemPath>gpio.c</itemPath>
+      <itemPath>lora.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -362,6 +364,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-157ff"/>
         <property key="poweroptions.powerenable" value="true"/>
+        <property key="programmerToGoFilePath"
+                  value="/home/mizkyosia/CIR3/Electronique numérique/Projet/LoRa_Ground.X/debug/default/LoRa_Rocket_ptg"/>
         <property key="programmerToGoImageName" value="LoRa_Rocket_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>

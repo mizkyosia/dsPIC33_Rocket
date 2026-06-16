@@ -1,8 +1,8 @@
 /*
  * File:   general.h
- * Author: lal
+ * Author: mizkyosia
  *
- * Created on 13 mars 2015, 14:48
+ * Created on 6 juin 2026
  */
 
 #include <xc.h>
@@ -36,19 +36,10 @@ extern uint8_t lora_mode;
 #define OUTP_HIGH	SET         // high level
 #define OUTP_LOW	CLEAR       // low level
 
-#define FCY 3685000UL  // Base frequency without PLL = Fosc / 2
+#define FCY 39613750UL  // Frequency (with PLL)
 
 #include <libpic30.h>
 
-#define PAYLOAD_LENGTH 7                             // for transmission: number of bytes to transmit
-
-
-// =================== PINS CONFIG ===================
-// ===== LoRa module =====
-
-// ===== UART =====
-#define UART_TX         U1TXREG     // pin RC6 is used for UART transmission
-#define UART_RX         U1RXREG     // pin RC7 is used for UART reception
 
 // New typedefs
 typedef unsigned char	uint8_t;    // uint8_t means byte (8-bit)

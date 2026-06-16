@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c spi.c uart.c lora.c gpio.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c spi.c uart.c gpio.c lora.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/lora.o ${OBJECTDIR}/gpio.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/spi.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/lora.o.d ${OBJECTDIR}/gpio.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/gpio.o ${OBJECTDIR}/lora.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/spi.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/gpio.o.d ${OBJECTDIR}/lora.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/lora.o ${OBJECTDIR}/gpio.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/gpio.o ${OBJECTDIR}/lora.o
 
 # Source Files
-SOURCEFILES=main.c spi.c uart.c lora.c gpio.c
+SOURCEFILES=main.c spi.c uart.c gpio.c lora.c
 
 
 
@@ -107,17 +107,17 @@ ${OBJECTDIR}/uart.o: uart.c  .generated_files/flags/default/f02823cf67c0df25e257
 	@${RM} ${OBJECTDIR}/uart.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  uart.c  -o ${OBJECTDIR}/uart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/uart.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/lora.o: lora.c  .generated_files/flags/default/e75713bc37b0e23e32b453a91ef413823ad4a38 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/lora.o.d 
-	@${RM} ${OBJECTDIR}/lora.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  lora.c  -o ${OBJECTDIR}/lora.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lora.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
 ${OBJECTDIR}/gpio.o: gpio.c  .generated_files/flags/default/d310dea9989778c9759793623d91c4965f26e8bd .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/gpio.o.d 
 	@${RM} ${OBJECTDIR}/gpio.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  gpio.c  -o ${OBJECTDIR}/gpio.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/gpio.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/lora.o: lora.c  .generated_files/flags/default/e75713bc37b0e23e32b453a91ef413823ad4a38 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/lora.o.d 
+	@${RM} ${OBJECTDIR}/lora.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  lora.c  -o ${OBJECTDIR}/lora.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lora.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 else
 ${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/87cc34f5737f4c5e50cb5457245d23417a1b54a4 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
@@ -138,17 +138,17 @@ ${OBJECTDIR}/uart.o: uart.c  .generated_files/flags/default/5c2c7c610d5853004175
 	@${RM} ${OBJECTDIR}/uart.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  uart.c  -o ${OBJECTDIR}/uart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/uart.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/lora.o: lora.c  .generated_files/flags/default/4de098536e6afe6d1f29e459e6a59b41f663f5fb .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/lora.o.d 
-	@${RM} ${OBJECTDIR}/lora.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  lora.c  -o ${OBJECTDIR}/lora.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lora.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
 ${OBJECTDIR}/gpio.o: gpio.c  .generated_files/flags/default/4588033938e8fe838769c9408d2e762b875e5d90 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/gpio.o.d 
 	@${RM} ${OBJECTDIR}/gpio.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  gpio.c  -o ${OBJECTDIR}/gpio.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/gpio.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/lora.o: lora.c  .generated_files/flags/default/4de098536e6afe6d1f29e459e6a59b41f663f5fb .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/lora.o.d 
+	@${RM} ${OBJECTDIR}/lora.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  lora.c  -o ${OBJECTDIR}/lora.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lora.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 

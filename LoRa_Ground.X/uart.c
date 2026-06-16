@@ -1,8 +1,8 @@
 /*
- * File:   usart_async.c
- * Author: lal
+ * File:   uart.c
+ * Author: mizkyosia
  *
- * Created on 9 avril 2015, 07:44
+ * Created on 6 Juin 2026
  */
 
 #include <stdio.h>
@@ -21,11 +21,11 @@ void UART1_Init(unsigned long baudrate)
     __builtin_write_OSCCONL(OSCCON & 0xBF);
     
     // Pin setup
-    RPOR5bits.RP11R = 3; // UART1 TX assigned to RP11
-    RPINR18bits.U1RXR = 10;  // RP10 assigned to UART1 RX
+    RPOR2bits.RP4R = 3; // UART1 TX assigned to RP4
+    RPINR18bits.U1RXR = 5;  // RP5 assigned to UART1 RX
     
-    TRISBbits.TRISB11 = OUTP;
-    TRISBbits.TRISB10 = INP;
+    TRISBbits.TRISB4 = OUTP;
+    TRISBbits.TRISB5 = INP;
     
     // Lock pin registers
     __builtin_write_OSCCONL(OSCCON | 0x40);
@@ -40,7 +40,7 @@ void UART1_Init(unsigned long baudrate)
     
     // Baud Rate Generator Calculation for 115200 baud with BRGH=1
     // U1BRG = (39613750 / (4 * 115200)) - 1 = 84.96 -> 85
-    U1BRG = 47;
+    U1BRG = 85;
 
     // Enable UART and TX
     U1MODEbits.UARTEN = 1;  // Enable UART1
@@ -86,7 +86,7 @@ void UARTWriteByteHex(uint8_t data)
     UARTWriteByte(hexa[data % 16]);     // write ASCII value of hexadecimal low nibble
 }
 
-void UARTWriteByteDec(uint8_t data)
+void UARTWriteU8(uint8_t data)
 {
 
     UARTWriteByte((data / 100) + '0');              // write ASCII value of hundreds digit
@@ -95,4 +95,85 @@ void UARTWriteByteDec(uint8_t data)
 
     UARTWriteByte(0x0D);      // write Carriage Return
     UARTWriteByte(0x0A);      // write Line Feed (New Line))
+}
+
+void UARTWriteU16(uint16_t data)
+{
+
+    UARTWriteByte((data / 10000) + '0');            
+    UARTWriteByte(((data % 10000) / 1000) + '0');   
+    UARTWriteByte(((data % 1000) / 100) + '0');     
+    UARTWriteByte(((data % 100) / 10) + '0');       
+    UARTWriteByte((data % 10) + '0');       
+
+    UARTWriteByte(0x0D);      // write Carriage Return
+    UARTWriteByte(0x0A);      // write Line Feed (New Line))
+}
+
+void UARTWriteFloat(float value)
+{
+    char buffer[20];
+
+    int integerPart;
+    int fractionalPart;
+
+    if(value < 0)
+    {
+        UARTWriteByte('-');
+        value = -value;
+    }
+
+    integerPart = (int)value;
+
+    fractionalPart = (int)((value - integerPart) * 1000.0f);
+
+    sprintf(buffer, "%d.%03d", integerPart, fractionalPart);
+
+    UARTWriteStr(buffer);
+}
+
+
+void UARTWritePayloadDebug(const Payload *p)
+{
+    UARTWriteStrLn("Payload:");
+
+    UARTWriteStr("  ACC = {");
+    UARTWriteU16(p->acc.x);
+    UARTWriteStr(", ");
+    UARTWriteU16(p->acc.y);
+    UARTWriteStr(", ");
+    UARTWriteU16(p->acc.z);
+    UARTWriteStrLn("}");
+
+    UARTWriteStr("  GYR = {");
+    UARTWriteU16(p->gyr.x);
+    UARTWriteStr(", ");
+    UARTWriteU16(p->gyr.y);
+    UARTWriteStr(", ");
+    UARTWriteU16(p->gyr.z);
+    UARTWriteStrLn("}");
+
+    UARTWriteStr("  POS = {");
+    UARTWriteFloat(p->pos.x);
+    UARTWriteStr(", ");
+    UARTWriteFloat(p->pos.y);
+    UARTWriteStr(", ");
+    UARTWriteFloat(p->pos.z);
+    UARTWriteStrLn("}");
+
+    UARTWriteStr("  Pressure = ");
+    UARTWriteFloat(p->pressure);
+    UARTWriteStr(" hPa\r\n");
+
+    UARTWriteStr("  DeltaTime = ");
+    UARTWriteU16(p->deltaTime);
+    UARTWriteStrLn(" ms");
+
+    UARTWriteStr("  Battery = ");
+    UARTWriteU8((int)p->battery);
+    UARTWriteStrLn(" %");
+
+    UARTWriteStr("  Stage = ");
+    UARTWriteU8((int)p->stage);
+    UARTWriteStrLn(" ");
 }

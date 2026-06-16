@@ -1,6 +1,7 @@
 #include "lora.h"
 #include "spi.h"
 #include "uart.h"
+#include "payload.h"
 
 void LoRa_Init()
 {
@@ -125,34 +126,37 @@ void LoRa_SendPacket(uint8_t *data, uint8_t length)
     uint8_t i;
 
     // Standby mode
-    LoRa_WriteRegister(0x01, 0x81);
+    LoRa_WriteRegister(REG_OP_MODE, LORA_STANDBY_MODE);
 
     // FIFO pointer
-    LoRa_WriteRegister(0x0D, 0x00);
+    LoRa_WriteRegister(REG_FIFO_ADDR_PTR, 0x00);
 
     // FIFO TX base address
-    LoRa_WriteRegister(0x0E, 0x00);
+    LoRa_WriteRegister(REG_FIFO_TX_BASE_ADDR, 0x00);
 
     // Payload length
-    LoRa_WriteRegister(0x22, length);
+    LoRa_WriteRegister(REG_PAYLOAD_LENGTH_LORA, length);
 
     // Write payload into FIFO
     for(i = 0; i < length; i++)
     {
-        LoRa_WriteRegister(0x00, data[i]);
+        LoRa_WriteRegister(REG_FIFO, data[i]);
     }
 
     // TX mode
-    LoRa_WriteRegister(0x01, 0x83);
+    LoRa_WriteRegister(REG_OP_MODE, LORA_TX_MODE);
 
     // Wait for TX done
-    while((LoRa_ReadRegister(0x12) & 0x08) == 0);
+    while((LoRa_ReadRegister(REG_IRQ_FLAGS) & 0x08) == 0);
 
     // Clear IRQ flag
-    LoRa_WriteRegister(0x12, 0x08);
+    LoRa_WriteRegister(REG_IRQ_FLAGS, 0x08);
 }
 
 
+void LoRa_SendPayload(Payload payload){
+    LoRa_SendPacket((uint8_t*)&payload, PAYLOAD_LENGTH);
+}
 
 
 
