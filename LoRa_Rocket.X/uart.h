@@ -9,15 +9,18 @@
 #define	_UART_H
 
 #include "general.h"
+#include "payload.h"
 
 
 void UART1_Init(unsigned long baudRate);           // init UART with specified baud rate
-inline void UARTWriteByte(uint8_t data);
-inline uint8_t UARTReadByte(void);
+uint8_t UARTReadByte(void);                 // read a byte from UART
+void UARTWriteByte(uint8_t data);           // send a byte to UART
 void UARTWriteStr(char *string);               // output strings to UART
 void UARTWriteStrLn(char *string);             // output strings to UART
 void UARTWriteByteHex(uint8_t data);        // send the hexadecimal value of a byte so that it is readable in a terminal window
-void UARTWriteByteDec(uint8_t data);        // send the decimal value of a byte so that it is readable in a terminal window
+void UARTWriteU8(uint8_t data);        // send the decimal value of a byte so that it is readable in a terminal window
+void UARTWriteU16(uint16_t data);
+void UARTWriteFloat(float value);
 
 #endif	/* _UART_H */
 

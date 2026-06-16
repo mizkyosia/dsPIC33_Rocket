@@ -6,6 +6,7 @@
  */
 
 #include "general.h"
+#include "payload.h"
 
 #ifndef LORA_H
 #define	LORA_H
@@ -160,6 +161,8 @@ void LoRa_AntennaRX();
 void LoRa_WriteRegister(uint8_t addr, uint8_t value);
 uint8_t LoRa_ReadRegister(uint8_t addr);
 void LoRa_SendPacket(uint8_t *data, uint8_t length);
+
+inline void LoRa_SendPayload(Payload payload);
 
 void GetMode(void);
 

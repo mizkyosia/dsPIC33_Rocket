@@ -2,12 +2,11 @@
 #include "uart.h"
 #include "lora.h"
 #include "spi.h"
+#include "i2c.h"
 #include <xc.h>
 
 void System_Init(void)
 {
-    
-    
     // All pins digital
     AD1PCFGL = 0xFFFF;
     
@@ -24,11 +23,14 @@ void System_Init(void)
     UART1_Init(115200);
     
     // Configure RF control pins
-    LoRa_InitPins();
+    // LoRa_InitPins();
 
     // Initialize SPI
     SPI1_Init();
+    
+    // Initialize I2C
+    I2C1_Init();
 
     // Reset SX1272
-    LoRa_Reset();
+    // LoRa_Reset();
 }

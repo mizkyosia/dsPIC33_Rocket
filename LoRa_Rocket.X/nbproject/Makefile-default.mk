@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c spi.c uart.c lora.c gpio.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c spi.c uart.c lora.c gpio.c i2c.c BMP280.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/lora.o ${OBJECTDIR}/gpio.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/spi.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/lora.o.d ${OBJECTDIR}/gpio.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/lora.o ${OBJECTDIR}/gpio.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/BMP280.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/spi.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/lora.o.d ${OBJECTDIR}/gpio.o.d ${OBJECTDIR}/i2c.o.d ${OBJECTDIR}/BMP280.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/lora.o ${OBJECTDIR}/gpio.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/lora.o ${OBJECTDIR}/gpio.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/BMP280.o
 
 # Source Files
-SOURCEFILES=main.c spi.c uart.c lora.c gpio.c
+SOURCEFILES=main.c spi.c uart.c lora.c gpio.c i2c.c BMP280.c
 
 
 
@@ -119,6 +119,18 @@ ${OBJECTDIR}/gpio.o: gpio.c  .generated_files/flags/default/30285e444ced2481a272
 	@${RM} ${OBJECTDIR}/gpio.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  gpio.c  -o ${OBJECTDIR}/gpio.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/gpio.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
+${OBJECTDIR}/i2c.o: i2c.c  .generated_files/flags/default/2a2f789354a0a63b5dbcb80058150595e3d8cbda .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/i2c.o.d 
+	@${RM} ${OBJECTDIR}/i2c.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  i2c.c  -o ${OBJECTDIR}/i2c.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/i2c.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/BMP280.o: BMP280.c  .generated_files/flags/default/42be1779f7d0f9bb2f659310d6704e39a9580f31 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/BMP280.o.d 
+	@${RM} ${OBJECTDIR}/BMP280.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  BMP280.c  -o ${OBJECTDIR}/BMP280.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/BMP280.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 else
 ${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/f8479ea932ba21b42612adfec9a5e486456bd52 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
@@ -149,6 +161,18 @@ ${OBJECTDIR}/gpio.o: gpio.c  .generated_files/flags/default/aa3e966fe55f296678ea
 	@${RM} ${OBJECTDIR}/gpio.o.d 
 	@${RM} ${OBJECTDIR}/gpio.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  gpio.c  -o ${OBJECTDIR}/gpio.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/gpio.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/i2c.o: i2c.c  .generated_files/flags/default/da955da6f64734a4fea0eb54e6261838b7a05201 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/i2c.o.d 
+	@${RM} ${OBJECTDIR}/i2c.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  i2c.c  -o ${OBJECTDIR}/i2c.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/i2c.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/BMP280.o: BMP280.c  .generated_files/flags/default/b29bab6ed9c5b16c8b4430bcc44295260ac25774 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/BMP280.o.d 
+	@${RM} ${OBJECTDIR}/BMP280.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  BMP280.c  -o ${OBJECTDIR}/BMP280.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/BMP280.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 

@@ -13,10 +13,13 @@
 #include <stdint.h>
 #include <xc.h>
 #include "general.h"
+#include "main.h"
 #include "uart.h"
 #include "spi.h"
 #include "lora.h"
 #include "gpio.h"
+#include "payload.h"
+#include "BMP280.h"
 
 
 // =============================================================================
@@ -71,89 +74,91 @@ uint8_t txBuffer[256];
 uint8_t version;
 uint8_t test;
 
-int main(int argc, char** argv) {
+Payload payload;
 
-    const uint8_t txMsg[] = "Poisson_Steve";
+int main(int argc, char** argv) {
 
     CLKDIVbits.DOZEN = 0;
     
     System_Init();
-
-    LoRa_AntennaTX(); // connect antenna to module output
+    
+    //UARTWriteStrLn("System initialization...");
+    
+    //LoRa_AntennaTX(); // connect antenna to module output
 
     // put module in LoRa mode (see SX1272 datasheet page 107)
-    UARTWriteStrLn("set mode to LoRa standby");    
-    
-    LoRa_WriteRegister(REG_OP_MODE, FSK_SLEEP_MODE); // SLEEP mode required first to change bit n�7
-    LoRa_WriteRegister(REG_OP_MODE, LORA_SLEEP_MODE); // switch from FSK mode to LoRa mode
-    LoRa_WriteRegister(REG_OP_MODE, LORA_STANDBY_MODE); // STANDBY mode required fot FIFO loading
-    __delay_ms(100);
-    GetMode();
+    //UARTWriteStrLn("set mode to LoRa standby");
+
+    //LoRa_WriteRegister(REG_OP_MODE, FSK_SLEEP_MODE); // SLEEP mode required first to change bit n�7
+    //LoRa_WriteRegister(REG_OP_MODE, LORA_SLEEP_MODE); // switch from FSK mode to LoRa mode
+    //LoRa_WriteRegister(REG_OP_MODE, LORA_STANDBY_MODE); // STANDBY mode required fot FIFO loading
+    //__delay_ms(100);
+    //GetMode();
 
     UARTWriteStrLn("initialized module ");
+
+    //LoRa_Init();
     
-    LoRa_Init();
+    BMP280_Init();
+
+    // version = LoRa_ReadRegister(REG_VERSION);
     
-    version = LoRa_ReadRegister(REG_VERSION);
+    UARTWriteStrLn("Reading chip IDs & versions...");
+    
+    //uint8_t capteur_id = I2C1_Read(BME280_ADDR, BME280_REG_CHIP_ID);
+    
+    //UARTWriteStr("LoRa version : "); UARTWriteByteHex(version); UARTWriteStrLn(" ");
+    //UARTWriteStr("BME280 ID : "); UARTWriteByteHex(capteur_id); UARTWriteStrLn(" ");
 
+    loop();
 
-    strcpy((char*) txBuffer, (char*) txMsg); // load txBuffer with content of txMsg
-    // txMsg is a table of constant values, so it is stored in Flash Memory
-    // txBuffer is a table of variables, so it is stored in RAM
+}
 
-    // load FIFO with data to transmit
-    UARTWriteStrLn(" ");
-    UARTWriteStrLn("step 1: load FIFO");
-    LoRa_WriteRegister(REG_FIFO_ADDR_PTR, LoRa_ReadRegister(REG_FIFO_TX_BASE_ADDR)); // FifoAddrPtr takes value of FifoTxBaseAddr
-    LoRa_WriteRegister(REG_PAYLOAD_LENGTH_LORA, PAYLOAD_LENGTH); // set the number of bytes to transmit (PAYLOAD_LENGTH is defined in RF_LoRa868_SO.h)
+void test_LoRa(){
+    UARTWriteStrLn("Sending Payload through LoRa module :");
 
-    for (i = 0; i < PAYLOAD_LENGTH; i++) {
-        LoRa_WriteRegister(REG_FIFO, txBuffer[i]); // load FIFO with data to transmit  
-        __delay_ms(100);
+        Payload p = {
+            .acc =
+            {
+                .x = 0,
+                .y = 1,
+                .z = 2
+            },
+            .gyr =
+            {
+                .x = 3,
+                .y = 4,
+                .z = 5
+            },
+            .pos =
+            {
+                .x = 6,
+                .y = 7,
+                .z = 8
+            },
+            .deltaTime = 9,
+            .pressure = 10,
+            .battery = 11,
+            .stage = 12
+        };
+
+        LoRa_SendPayload(p);
+        UARTWriteStrLn("Payload sent. Waiting for next transmission...");
+}
+
+void testBME(void){
+    UARTWriteStrLn("Fetching pressure data...");
+    
+    //uint8_t temp_lsb = I2C1_Read(BME280_ADDR, 0xFB);
+    BMP280_FetchData(&payload);
+    
+    UARTWriteStr("Pressure : "); UARTWriteU16(payload.pressure >> 16); UARTWriteU16(payload.pressure); UARTWriteStrLn(" Pa");
+    
+    __delay_ms(500);
+}
+
+void loop(void) {
+    while (1) {
+        testBME();
     }
-
-    forever{
-
-        test++;
-        // set mode to LoRa TX
-        UARTWriteStrLn(" ");
-        UARTWriteStrLn("step 2: set mode to LoRa TX");
-        LoRa_WriteRegister(REG_OP_MODE, LORA_TX_MODE);
-        __delay_ms(100); // delay required to start oscillator and PLL
-        // GetMode();
-
-        // wait end of transmission
-        reg_val = LoRa_ReadRegister(REG_IRQ_FLAGS);
-        while ((reg_val & 0x08) == 0x00) { // wait for end of transmission (wait until TxDone is set)
-            reg_val = LoRa_ReadRegister(REG_IRQ_FLAGS);
-        }
-        UARTWriteStrLn(" ");
-        UARTWriteStrLn("step 3: TxDone flag set");
-
-        __delay_ms(200); // delay is required before checking mode: it takes some time to go from TX mode to STDBY mode
-        GetMode(); // check that mode is back to STDBY
-
-        // reset all IRQs
-        UARTWriteStrLn(" ");
-        UARTWriteStrLn("step 4: clear flags");
-        reg_val = LoRa_ReadRegister(REG_IRQ_FLAGS);
-        UARTWriteStr("before clear: REG_IRQ_FLAGS = 0x");
-        UARTWriteByteHex(reg_val);
-
-        LoRa_WriteRegister(REG_IRQ_FLAGS, 0xFF); // clear flags: writing 1 clears flag
-
-        // check that flags are actually cleared (useless if not debugging)
-        reg_val = LoRa_ReadRegister(REG_IRQ_FLAGS);
-        UARTWriteStr("after clear: REG_IRQ_FLAGS = 0x");
-        UARTWriteByteHex(reg_val);
-        
-        UARTWriteStr("step 5: wait until next transmission");
-
-        // wait before next transmission
-        for (i = 0; i < 4; i++) {
-            // __delay_ms(500);
-        }
-
-    }
-
 }
